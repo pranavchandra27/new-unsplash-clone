@@ -1,0 +1,303 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap");
+
+@tailwind components;
+@tailwind base;
+@tailwind utilities;
+
+body {
+  overflow-x: hidden;
+}
+
+input[type="search"]::-webkit-search-cancel-button {
+  cursor: pointer;
+}
+
+.hero {
+  padding-bottom: 46px;
+}
+
+.photo:hover .photo_shadow-inset {
+  display: block;
+}
+
+.photo_shadow-inset {
+  display: none;
+  box-shadow: inset 0px 40px 150px 20px rgba(0, 0, 0, 0.3);
+  cursor: zoom-in;
+}
+
+.collections-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
+}
+
+.collection-card .title {
+  width: fit-content;
+}
+
+.collection-card .title:hover .collection-shadow {
+  display: block;
+}
+
+.collection:hover .collection-shadow {
+  display: block;
+}
+
+.collection-shadow {
+  display: none;
+  animation: hover 200ms ease-in-out forwards;
+  transform-origin: center center;
+}
+
+.collection .right {
+  width: 30%;
+}
+
+.collection .left {
+  width: 70%;
+}
+
+.hero__header {
+  width: 66.66%;
+  margin: 0 auto;
+  padding-top: 144px;
+  padding-bottom: 134px;
+}
+
+.tag {
+  background-color: #eee;
+}
+.tag:hover {
+  background-color: #ddd;
+}
+
+.hero__search-bar {
+  display: block;
+}
+
+.hero__heading {
+  font-size: 46px;
+}
+
+.hero__subheading {
+  font-size: 18px;
+  margin-top: 16px;
+  margin-bottom: 24px;
+}
+
+.my-container {
+  max-width: 1320px;
+  margin: 0 auto;
+}
+.grid__container {
+  column-count: 3;
+  column-gap: 24px;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+.overlay {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  cursor: zoom-out;
+}
+
+/* Modal Content/Box */
+.modal-content {
+  position: relative;
+  box-sizing: border-box;
+  border-radius: 4px;
+  z-index: 2;
+  background-color: #fefefe;
+  margin: 15px auto; /* 15% from the top and centered */
+  padding: 15px;
+  border: 1px solid #888;
+  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2);
+  width: 90%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+  left: 15px;
+  top: -10px;
+  position: fixed;
+  color: rgb(230, 230, 230);
+  font-size: 40px;
+  font-weight: 300;
+}
+
+.close:hover,
+.close:focus {
+  cursor: pointer;
+}
+
+.left-icon {
+  position: fixed;
+  top: 50%;
+  left: 0px;
+  font-size: 30px;
+  color: rgb(230, 230, 230);
+  cursor: pointer;
+  padding: 80px 19px;
+  transform: translateY(-50%);
+}
+
+.right-icon {
+  position: fixed;
+  top: 50%;
+  right: 0px;
+  font-size: 30px;
+  color: rgb(230, 230, 230);
+  cursor: pointer;
+  padding: 80px 19px;
+  transform: translateY(-50%);
+}
+
+.modal-content__image-container {
+  min-height: 500px;
+  height: 80vh;
+}
+
+button.download:focus .dropdown {
+  display: block;
+}
+
+.dropdown {
+  position: absolute;
+  top: 45px;
+  right: 0px;
+  transition: all 0.2s ease-out;
+  animation: growOut 300ms ease-in-out forwards;
+  transform-origin: top center;
+  display: none;
+}
+
+.dropdown .arrow {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  top: -5px;
+  right: 10px;
+  transform: rotate(45deg);
+}
+
+@media (max-width: 974px) {
+  .grid__container {
+    column-count: 2;
+  }
+  .collections-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 752px) {
+  .hero__header {
+    width: 100%;
+    margin: 0 16px;
+    padding-top: 80px;
+    padding-bottom: 62px;
+  }
+
+  .hero__search-bar {
+    display: none;
+  }
+
+  .hero__heading {
+    font-size: 24px;
+  }
+
+  .hero__subheading {
+    font-size: 15px;
+    margin-top: 8px;
+    margin-bottom: 0px;
+  }
+
+  .grid__container {
+    column-count: 1;
+    padding: 0px;
+    margin: 0px;
+    column-gap: 0px;
+  }
+
+  .collections-container {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .collection-card {
+    max-width: 400px;
+  }
+}
+
+/* Animation for hover */
+@keyframes hover {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0.3;
+  }
+}
+
+/* .dropdown animation */
+
+@-moz-keyframes growOut {
+  0% {
+    transform: scale(0);
+  }
+  80% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@-webkit-keyframes growOut {
+  0% {
+    transform: scale(0);
+  }
+  80% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@-o-keyframes growOut {
+  0% {
+    transform: scale(0);
+  }
+  80% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes growOut {
+  0% {
+    transform: scale(0);
+  }
+  80% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
