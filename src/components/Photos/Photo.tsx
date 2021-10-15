@@ -9,7 +9,7 @@ interface PhotoProps {
 
 const Photo: FC<PhotoProps> = ({ photo }) => {
 
-  function calculateRatio(h: number, w: number) {
+  function calculateRatio(h: number, w: number): { height: number, percent: number } {
     const percent = 416 / w * 100
     const height = h * (percent / 100)
     return {
@@ -75,6 +75,7 @@ const Photo: FC<PhotoProps> = ({ photo }) => {
           alt={photo.alt_description}
           objectFit='cover'
           loading="eager"
+          layout='responsive'
         />
       </div>
     </Link>
