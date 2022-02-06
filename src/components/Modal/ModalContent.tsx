@@ -82,7 +82,7 @@ const ModalContent: FC<ModalContentProps> = ({ photo }) => {
             }}
           >
             <img
-              className="max-h-[80vh] min-h-[500px]"
+              className="max-h-[80vh] min-h-[500px] object-cover"
               src={photo.urls.regular}
               alt={photo.alt_description}
             />
