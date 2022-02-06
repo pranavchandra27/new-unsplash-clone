@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import useSWRInfinite from "swr/infinite";
 
@@ -8,10 +8,9 @@ import Photo from "./Photo";
 import GridContainer from "@components/GridContainer";
 import { fetcher } from "@utils/helpers";
 import { StateProps } from "typings";
-import Spinner from "@components/Spinner";
 
 const PhotosGrid = () => {
-  const initialRender = useRef(true);
+
   const {
     state: {
       photosData: { results: photosList, total },
@@ -21,7 +20,7 @@ const PhotosGrid = () => {
     dispatch,
   }: StateProps = useData();
   const { data, error, isValidating } = useSWRInfinite(
-    () => (page === 1 && initialRender ? null : `/api/photos?page=${page}`),
+    () => `/api/photos?page=${page}`,
     fetcher
   );
 
@@ -32,11 +31,8 @@ const PhotosGrid = () => {
 
   useEffect(() => {
     if (!data || error) return;
-    setPhotosData(data[0].response)(dispatch);
 
-    if (initialRender) {
-      initialRender.current = false;
-    }
+    setPhotosData(data[0].response)(dispatch);
   }, [data]);
 
   return (

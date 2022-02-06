@@ -1,6 +1,5 @@
-import React, { useEffect, useRef } from "react";
-import { server } from "config";
-import { ICollectionProps, IResponse, StateProps } from "typings";
+import React, { useEffect } from "react";
+import { ICollectionProps, StateProps } from "typings";
 import Collection from "@components/Collections/Collection";
 import InfiniteScroll from "react-infinite-scroll-component";
 import useSWRInfinite from "swr/infinite";
@@ -8,12 +7,7 @@ import { fetcher } from "@utils/helpers";
 import { useData } from "@context/provider";
 import { changeCollectionPage, setCollections } from "@context/actions";
 
-interface Props {
-  collectionsData: IResponse;
-}
-
-const Collections = ({ collectionsData }: Props) => {
-  const initialRender = useRef(true);
+const Collections = () => {
   const {
     state: {
       collectionPage,
@@ -23,19 +17,9 @@ const Collections = ({ collectionsData }: Props) => {
   }: StateProps = useData();
 
   const { data, error, isValidating } = useSWRInfinite(
-    () =>
-      collectionPage === 1 && initialRender
-        ? null
-        : `/api/collections?page=${collectionPage}`,
+    () => `/api/collections?page=${collectionPage}`,
     fetcher
   );
-
-  useEffect(() => {
-    if (initialRender) {
-      setCollections(collectionsData)(dispatch);
-      initialRender.current = false;
-    }
-  }, []);
 
   useEffect(() => {
     if (!data || error) return;
@@ -81,12 +65,3 @@ const Collections = ({ collectionsData }: Props) => {
 };
 
 export default Collections;
-
-export const getServerSideProps = async () => {
-  const res = await fetch(`${server}/api/collections?page=1&perPage=30`);
-  const { response } = await res.json();
-
-  return {
-    props: { collectionsData: response },
-  };
-};
