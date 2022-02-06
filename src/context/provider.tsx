@@ -1,4 +1,11 @@
-import { useReducer, createContext, FC, useContext, Reducer, useEffect } from "react";
+import {
+  useReducer,
+  createContext,
+  FC,
+  useContext,
+  Reducer,
+  useEffect,
+} from "react";
 import { setHeaderPhoto } from "./actions";
 import reducer, { Action, initialState, State } from "./reducer";
 
@@ -12,9 +19,9 @@ export const AppProvider: FC = ({ children }) => {
 
   useEffect(() => {
     if (!state.headerPhoto) {
-      getHeaderPhoto()
+      getHeaderPhoto();
     }
-  }, [state.headerPhoto])
+  }, [state.headerPhoto]);
 
   const getHeaderPhoto = async () => {
     try {
@@ -22,13 +29,12 @@ export const AppProvider: FC = ({ children }) => {
       const { response } = await res.json();
 
       setHeaderPhoto(response[0])(dispatch);
-
     } catch (error) {
       console.error(JSON.stringify(error));
     }
-  }
+  };
 
-  setInterval(getHeaderPhoto, 1000 * 60 * 60)
+  setInterval(getHeaderPhoto, 1000 * 60 * 60);
 
   return (
     <AppContext.Provider value={{ state, dispatch }}>

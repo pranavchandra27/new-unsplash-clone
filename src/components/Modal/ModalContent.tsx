@@ -8,21 +8,26 @@ import {
   IoCalendarClearOutline,
   IoShieldCheckmarkOutline,
 } from "react-icons/io5";
-import { timeSince } from "@utils/helpers";
+import useNextBlurhash from "use-next-blurhash";
+
+import { timeSince, breakpoints } from "@utils/helpers";
 import Dropdown from "@components/Dropdown";
-import Collection from "@components/Collections/Collection";
-import TagRenderer from "@components/TagRenderer";
+import useWindowSize from "src/hooks/useWindowSize";
+import RelatedCollections from "@components/RelatedCollections";
+import RelatedTags from "@components/RelatedTags";
 
 interface ModalContentProps {
   photo: any;
 }
 
 const ModalContent: FC<ModalContentProps> = ({ photo }) => {
-  console.log(photo);
+  const [width] = useWindowSize();
+  const [blurDataUrl] = useNextBlurhash(photo.blur_hash);
+
   return (
     photo && (
       <div>
-        <div className="flex justify-between items-center mb-3">
+        <div className="flex justify-between items-center mb-2 p-4 pb-0">
           <Link href={`/user/${photo.user.username}`}>
             <div className="flex items-center leading-none cursor-pointer">
               <span className="rounded-full overflow-hidden ring-1 ring-gray-400 ring-opacity-50">
@@ -63,22 +68,27 @@ const ModalContent: FC<ModalContentProps> = ({ photo }) => {
           </div>
         </div>
 
-        <div className="w-full">
-          <div className="w-full py-2.5 px-4 flex justify-center">
-            <div
-              className="modal-content__image-container"
-              style={{ backgroundColor: photo.color }}
-            >
-              <img
-                className="h-full"
-                src={photo.urls.regular}
-                alt={photo.alt_description}
-              />
-            </div>
+        <div
+          className={`${
+            width > breakpoints.sm ? "p-4" : "py-4"
+          } grid place-items-center`}
+        >
+          <div
+            style={{
+              background: `url(${blurDataUrl})`,
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "center",
+            }}
+          >
+            <img
+              className="max-h-[80vh] min-h-[500px]"
+              src={photo.urls.regular}
+              alt={photo.alt_description}
+            />
           </div>
         </div>
 
-        <div className="mt-4 flex items-start">
+        <div className="mt-4 px-4 flex items-start">
           <div className="md:flex w-2/5 md:max-w-xs justify-between">
             <div className="text-left">
               <p className="text-gray-500 text-sm">Veiws</p>
@@ -108,7 +118,7 @@ const ModalContent: FC<ModalContentProps> = ({ photo }) => {
             </div>
           </div>
         </div>
-        <div className="mt-4">
+        <div className="mt-4 px-4">
           {photo.location.title && (
             <div className="flex text-gray-500 items-center">
               <span className="text-md text-md mr-2">
@@ -132,26 +142,8 @@ const ModalContent: FC<ModalContentProps> = ({ photo }) => {
             <p className="text-sm">Free to use under unsplash license.</p>
           </div>
         </div>
-        <div className="mt-20">
-          <div className="my-container">
-            <h3 className="text-xl text-gray-700 mb-8">Related collections</h3>
-            <div className="collections-container">
-              {photo.related_collections.results.map((collection) => (
-                <Collection key={collection.id} {...collection} />
-              ))}
-            </div>
-          </div>
-        </div>
-        <div className="my-20">
-          <div className="my-container">
-            <h3 className="text-xl text-gray-700 mb-8">Related Tags</h3>
-            <div className="flex flex-wrap overflow-hidden -ml-2 -mb-2">
-              {photo.tags.map((tag) => (
-                <TagRenderer tag={tag} key={tag.title} />
-              ))}
-            </div>
-          </div>
-        </div>
+        <RelatedCollections collections={photo.related_collections.results} />
+        <RelatedTags tags={photo.tags} />
       </div>
     )
   );

@@ -1,53 +1,58 @@
-import { useEffect, useState } from "react";
-import { setPhotosData } from "@context/actions";
+import { useEffect, useRef } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
+import useSWRInfinite from "swr/infinite";
+
+import { changePage, setPhotosData } from "@context/actions";
 import { useData } from "@context/provider";
 import Photo from "./Photo";
-import InfiniteScroll from "@components/InfiniteScroll";
+import GridContainer from "@components/GridContainer";
+import { fetcher } from "@utils/helpers";
+import { StateProps } from "typings";
+import Spinner from "@components/Spinner";
 
 const PhotosGrid = () => {
-  const [loading, setLoading] = useState(true);
+  const initialRender = useRef(true);
   const {
     state: {
       photosData: { results: photosList, total },
+      loading,
       page,
     },
     dispatch,
-  } = useData();
+  }: StateProps = useData();
+  const { data, error, isValidating } = useSWRInfinite(
+    () => (page === 1 && initialRender ? null : `/api/photos?page=${page}`),
+    fetcher
+  );
+
+  const nextPage = () => {
+    const newPage = page + 1;
+    changePage(newPage)(dispatch);
+  };
 
   useEffect(() => {
-    (async () => {
-      let data = {
-        page,
-      };
-      try {
-        const res = await fetch("/api/photos", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        });
-        const { response } = await res.json();
+    if (!data || error) return;
+    setPhotosData(data[0].response)(dispatch);
 
-        setPhotosData(response)(dispatch);
-
-        setLoading(false);
-      } catch (error) {
-        setLoading(false);
-        alert(JSON.stringify(error));
-      }
-    })();
-  }, []);
+    if (initialRender) {
+      initialRender.current = false;
+    }
+  }, [data]);
 
   return (
-    <div className="my-container">
+    <div className="max-w-[1320px] mx-auto overflow-hidden px-0 sm:px-4">
       <InfiniteScroll
-        hasMore={photosList.lenght !== total}
-        loader={<h1 className="text-xl text-red-500">Loading...</h1>}
         dataLength={photosList.length}
-        next={() => { }}
-        children={photosList}
-      />
+        hasMore={total > photosList.length}
+        next={nextPage}
+        loader={""}
+      >
+        <GridContainer>
+          {photosList.map((photo: any) => (
+            <Photo key={photo.id} photo={photo} />
+          ))}
+        </GridContainer>
+      </InfiniteScroll>
     </div>
   );
 };

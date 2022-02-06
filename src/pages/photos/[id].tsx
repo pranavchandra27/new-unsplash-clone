@@ -2,43 +2,49 @@ import { useEffect, useState } from "react";
 import ModalContent from "@components/Modal/ModalContent";
 import PhotoModal from "@components/Modal/PhotoModal";
 import { useRouter } from "next/router";
+import { GetStaticPaths, GetStaticProps } from "next";
+import { server } from "config";
+import * as PhotoApi from "unsplash-js/dist/methods/photos/types";
 
-const Photo = () => {
-    const [photoData, setPhotoData] = useState(null);
-    const router = useRouter();
-    const { query } = router;
+interface Props {
+  photo: PhotoApi.Full;
+}
 
-    useEffect(() => {
-        if (query && query.id) {
-            (async () => {
-                try {
-                    const res = await fetch(`/api/photos/${query.id}`);
-                    const { response } = await res.json();
-
-                    setPhotoData(response);
-                } catch (error) {
-                    alert(JSON.stringify(error));
-                }
-            })();
-        }
-    }, [query]);
-
-    return (
-        // <PhotoModal open={true} onClose={() => router.back()}>
-        //     {photoData ? (
-        //         <ModalContent photo={photoData} />
-        //     ) : (
-        //         <h1 className="text-4xl">No Photo</h1>
-        //     )}
-        // </PhotoModal>
-        photoData ? (
-            <div className="p-4">
-                <ModalContent photo={photoData} />
-            </div>
-        ) : (
-            <h1 className="text-4xl">No Photo</h1>
-        )
-    );
+const Photo = ({ photo }: Props) => {
+  return <ModalContent photo={photo} />;
 };
 
 export default Photo;
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const data = await fetch(`${server}/api/photos?page=1&perPage=1000`);
+  const { response } = await data.json();
+
+  const paths = response.results.map((photo: PhotoApi.Basic) => ({
+    params: {
+      id: photo.id,
+    },
+  }));
+
+  return {
+    paths,
+    fallback: "blocking",
+  };
+};
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const data = await fetch(`${server}/api/photos/${params.id}`);
+  const { response } = await data.json();
+
+  if (!response) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: {
+      photo: response,
+    },
+  };
+};

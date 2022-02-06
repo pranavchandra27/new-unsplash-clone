@@ -4,7 +4,7 @@ import unsplashAPI from "@utils/unsplashAPI";
 const getPhotosList = async (req: NextApiRequest, res: NextApiResponse) => {
   const query:any = req.query;
   let page = parseInt(query.page)
-  const { status, response, errors } = await unsplashAPI.photos.list({
+  const { status, response, errors } = await unsplashAPI.collections.list({
     page: page,
     perPage: 30,
   })

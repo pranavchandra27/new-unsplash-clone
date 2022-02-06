@@ -6,7 +6,7 @@ const Header = () => {
     <nav className="h-16 flex w-full items-center px-5">
       <div className="flex-1 flex items-center">
         <Link href="/">
-          <div className="w-40">
+          <div className="hidden md:block w-40">
             <p className="text-md font-medium">Splash</p>
             <p className="text-sm">Photos for everyone</p>
           </div>
@@ -21,6 +21,11 @@ const Header = () => {
             className="w-full focus:placeholder-shown:text-gray-800 placeholder-shown:font-normal font-medium text-md text-gray-700 ml-4 placeholder-shown:text-sm outline-none bg-transparent"
           />
         </form>
+        <div className="ml-4">
+          <Link href="/collections">
+            <span className="cursor-pointer">Collections</span>
+          </Link>
+        </div>
       </div>
     </nav>
   );
