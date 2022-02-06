@@ -15,9 +15,10 @@ import Dropdown from "@components/Dropdown";
 import useWindowSize from "src/hooks/useWindowSize";
 import RelatedCollections from "@components/RelatedCollections";
 import RelatedTags from "@components/RelatedTags";
+import { IPhotoProps } from "typings";
 
 interface ModalContentProps {
-  photo: any;
+  photo: IPhotoProps;
 }
 
 const ModalContent: FC<ModalContentProps> = ({ photo }) => {

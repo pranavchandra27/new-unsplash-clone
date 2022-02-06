@@ -1,50 +1,22 @@
-import { useEffect, useState } from "react";
 import ModalContent from "@components/Modal/ModalContent";
-import PhotoModal from "@components/Modal/PhotoModal";
+import { fetcher } from "@utils/helpers";
 import { useRouter } from "next/router";
-import { GetStaticPaths, GetStaticProps } from "next";
-import { server } from "config";
-import * as PhotoApi from "unsplash-js/dist/methods/photos/types";
+import useSWR from "swr";
+import { IPhotoProps } from "typings";
 
-interface Props {
-  photo: PhotoApi.Full;
-}
 
-const Photo = ({ photo }: Props) => {
+const Photo = () => {
+  const router = useRouter();
+  const { id } = router.query;
+  const {data, error, isValidating} = useSWR(`/api/photos/${id}`, fetcher);
+
+
+
+  if(!data) return <p>Loading...</p>
+
+  const photo: IPhotoProps = data.response
+
   return <ModalContent photo={photo} />;
 };
 
 export default Photo;
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  const data = await fetch(`${server}/api/photos?page=1&perPage=1000`);
-  const { response } = await data.json();
-
-  const paths = response.results.map((photo: PhotoApi.Basic) => ({
-    params: {
-      id: photo.id,
-    },
-  }));
-
-  return {
-    paths,
-    fallback: "blocking",
-  };
-};
-
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const data = await fetch(`${server}/api/photos/${params.id}`);
-  const { response } = await data.json();
-
-  if (!response) {
-    return {
-      notFound: true,
-    };
-  }
-
-  return {
-    props: {
-      photo: response,
-    },
-  };
-};

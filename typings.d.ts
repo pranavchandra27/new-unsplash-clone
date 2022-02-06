@@ -11,8 +11,27 @@ export interface ICollectionProps extends Collection.Basic {
 }
 
 export interface IPhotoProps extends Photo.Full {
-  width: number;
-  height: number;
+  views: number;
+  downloads: number;
+  location: {
+    title: Nullable<string>;
+    name: Nullable<string>;
+    city: Nullable<string>;
+    country: Nullable<string>;
+    position: {
+      latitude: Nullable<string>;
+      longitude: Nullable<string>;
+    };
+  };
+  created_at: Date;
+  promoted_at: Date;
+  updated_at: Date;
+  related_collections: {
+    results: [ICollectionProps];
+    total: number;
+    type: string;
+  };
+  tags: [ITagProps];
 }
 
 export interface ITagProps {
