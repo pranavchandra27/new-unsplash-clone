@@ -29,7 +29,7 @@ const ModalContent: FC<ModalContentProps> = ({ photo }) => {
     photo && (
       <div>
         <div className="flex justify-between items-center mb-2 p-4 pb-0">
-          <Link href={`/user/${photo.user.username}`}>
+          <Link href={`/users/${photo.user.username}`}>
             <div className="flex items-center leading-none cursor-pointer">
               <span className="rounded-full overflow-hidden ring-1 ring-gray-400 ring-opacity-50">
                 <img
