@@ -60,7 +60,7 @@ const reducer: Reducer<State, Action> = (state, action) => {
       const { collections } = state;
       const { results: collectionResults, total: collectionTotal } = payload;
 
-      const collectionsData = [...collections.results, ...collectionResults];
+      const collectionsData = [...collections.results, ...collectionResults,];
       const newData = {
         results: collectionsData,
         total: collectionTotal,

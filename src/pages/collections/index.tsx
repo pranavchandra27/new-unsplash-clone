@@ -32,7 +32,7 @@ const Collections = () => {
   };
 
   return (
-    <div className="max-w-[1320px] mx-auto p-4">
+    <div className="max-w-[1320px] mx-auto px-4">
       <div className="py-12 md:pt-[60px] md:pb-[72px]">
         <h1 className="font-semibold text-2xl md:text-5xl">Collections</h1>
         <div className="w-full md:w-2/3 lg:w-2/4 mt-4 font-normal md:font-medium text-base md:text-lg">
@@ -53,7 +53,6 @@ const Collections = () => {
         hasMore={total !== collections.length}
         next={nextPage}
         loader={isValidating && <p>Loading...</p>}
-        scrollThreshold={200}
       >
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-2">
           {collections.map((collection: ICollectionProps) => (
