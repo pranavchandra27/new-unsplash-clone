@@ -8,7 +8,6 @@ import {
   IoCalendarClearOutline,
   IoShieldCheckmarkOutline,
 } from "react-icons/io5";
-import useNextBlurhash from "use-next-blurhash";
 
 import { timeSince, breakpoints } from "@utils/helpers";
 import Dropdown from "@components/Dropdown";
@@ -23,7 +22,6 @@ interface ModalContentProps {
 
 const ModalContent: FC<ModalContentProps> = ({ photo }) => {
   const [width] = useWindowSize();
-  const [blurDataUrl] = useNextBlurhash(photo?.blur_hash);
 
   return (
     photo && (
@@ -78,10 +76,6 @@ const ModalContent: FC<ModalContentProps> = ({ photo }) => {
           <div
             style={{
               backgroundColor: photo.color,
-              background: `url(${blurDataUrl})`,
-              backgroundRepeat: "no-repeat",
-              backgroundPosition: "center",
-              backgroundSize: "cover",
             }}
           >
             <img

@@ -1,7 +1,6 @@
 import { FC } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import useNextBlurhash from "use-next-blurhash";
 import { AiFillHeart, AiOutlinePlus, AiOutlineArrowDown } from "react-icons/ai";
 import { HiChevronDown } from "react-icons/hi";
 
@@ -13,7 +12,7 @@ interface PhotoProps {
 }
 
 const Photo: FC<PhotoProps> = ({ photo }) => {
-  const [blurDataUrl] = useNextBlurhash(photo.blur_hash);
+  // const [blurDataUrl] = useNextBlurhash(photo.blur_hash);
 
   /**
    *
@@ -54,11 +53,7 @@ const Photo: FC<PhotoProps> = ({ photo }) => {
         <div
           className={`box-border group cursor-[zoom-in] w-full`}
           style={{
-            background: `url(${blurDataUrl})`,
             backgroundColor: photo.color,
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "center",
-            backgroundSize: "cover"
           }}
         >
           <div className="relative">
@@ -109,7 +104,7 @@ const Photo: FC<PhotoProps> = ({ photo }) => {
             </div>
             <img
               className="w-full"
-              loading="eager"
+              loading="lazy"
               src={photo.urls.small}
               alt={photo.alt_description}
               width={416}

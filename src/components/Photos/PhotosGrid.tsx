@@ -8,7 +8,6 @@ import Photo from "./Photo";
 import GridContainer from "@components/GridContainer";
 import { fetcher } from "@utils/helpers";
 import { StateProps } from "typings";
-import useFetch from "@hooks/useFetch";
 
 const PhotosGrid = () => {
   const {
@@ -18,16 +17,11 @@ const PhotosGrid = () => {
     },
     dispatch,
   }: StateProps = useData();
-  const {
-    data,
-    error,
-    loading,
-  } = useFetch(`/api/photos?page=${page}`);
 
-  // const { data, error, isValidating } = useSWRInfinite(
-  //   () => `/api/photos?page=${page}`,
-  //   fetcher
-  // );
+  const { data, error, isValidating } = useSWRInfinite(
+    () => `/api/photos?page=${page}`,
+    fetcher
+  );
 
   const nextPage = () => {
     const newPage = page + 1;
@@ -36,7 +30,7 @@ const PhotosGrid = () => {
 
   useEffect(() => {
     if (!data || error) return;
-    setPhotosData(data.response)(dispatch);
+    setPhotosData(data[0].response)(dispatch);
   }, [data]);
 
   return (
@@ -45,8 +39,9 @@ const PhotosGrid = () => {
         dataLength={photosList.length}
         next={nextPage}
         hasMore={total !== photosList.length}
-        loader={loading ?  <div>Loading...</div> : <p></p>}
-       scrollThreshold={-200}
+        loader={
+          isValidating ? <div className="text-center">Loading...</div> : <p></p>
+        }
       >
         <GridContainer>
           {photosList.map((photo: any) => (
