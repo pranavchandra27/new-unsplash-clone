@@ -11,7 +11,8 @@
       ],
       "@context/*": [
         "src/context/*"
-      ]
+      ],
+      "@hooks/*":["src/hooks/*"]
     },
     "lib": [
       "dom",

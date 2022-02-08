@@ -52,7 +52,7 @@ const Collection = () => {
           </div>
         </div>
       </div>
-      <div className="max-w-[1320px] mx-auto px-4">
+      <div className="max-w-[1320px] mx-auto px-0 md:px-4">
         <Photos id={id.toString()} />
 
         <Related id={id.toString()} tags={collection.tags} />

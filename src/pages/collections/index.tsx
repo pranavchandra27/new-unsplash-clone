@@ -53,6 +53,7 @@ const Collections = () => {
         hasMore={total !== collections.length}
         next={nextPage}
         loader={isValidating && <p>Loading...</p>}
+        scrollThreshold={200}
       >
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-2">
           {collections.map((collection: ICollectionProps) => (

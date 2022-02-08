@@ -8,21 +8,26 @@ import Photo from "./Photo";
 import GridContainer from "@components/GridContainer";
 import { fetcher } from "@utils/helpers";
 import { StateProps } from "typings";
+import useFetch from "@hooks/useFetch";
 
 const PhotosGrid = () => {
-
   const {
     state: {
       photosData: { results: photosList, total },
-      loading,
       page,
     },
     dispatch,
   }: StateProps = useData();
-  const { data, error, isValidating } = useSWRInfinite(
-    () => `/api/photos?page=${page}`,
-    fetcher
-  );
+  const {
+    data,
+    error,
+    loading,
+  } = useFetch(`/api/photos?page=${page}`);
+
+  // const { data, error, isValidating } = useSWRInfinite(
+  //   () => `/api/photos?page=${page}`,
+  //   fetcher
+  // );
 
   const nextPage = () => {
     const newPage = page + 1;
@@ -31,17 +36,17 @@ const PhotosGrid = () => {
 
   useEffect(() => {
     if (!data || error) return;
-
-    setPhotosData(data[0].response)(dispatch);
+    setPhotosData(data.response)(dispatch);
   }, [data]);
 
   return (
-    <div className="max-w-[1320px] mx-auto overflow-hidden px-0 sm:px-4">
+    <div className="max-w-[1320px] mx-auto px-0 md:px-4">
       <InfiniteScroll
         dataLength={photosList.length}
-        hasMore={total > photosList.length}
         next={nextPage}
-        loader={""}
+        hasMore={total !== photosList.length}
+        loader={loading ?  <div>Loading...</div> : <p></p>}
+       scrollThreshold={-200}
       >
         <GridContainer>
           {photosList.map((photo: any) => (

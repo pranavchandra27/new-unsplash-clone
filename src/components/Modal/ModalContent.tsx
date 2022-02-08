@@ -23,12 +23,12 @@ interface ModalContentProps {
 
 const ModalContent: FC<ModalContentProps> = ({ photo }) => {
   const [width] = useWindowSize();
-  const [blurDataUrl] = useNextBlurhash(photo.blur_hash);
+  const [blurDataUrl] = useNextBlurhash(photo?.blur_hash);
 
   return (
     photo && (
       <div>
-        <div className="flex justify-between items-center mb-2 p-4 pb-0">
+        <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-2 p-4 pb-0">
           <Link href={`/users/${photo.user.username}`}>
             <div className="flex items-center leading-none cursor-pointer">
               <span className="rounded-full overflow-hidden ring-1 ring-gray-400 ring-opacity-50">
@@ -45,15 +45,16 @@ const ModalContent: FC<ModalContentProps> = ({ photo }) => {
             </div>
           </Link>
 
-          <div className="flex items-center">
-            <button className="shadow-sm transition-colors duration-300 ease-in-out py-1.5 px-2.5 rounded mr-2.5 text-gray-500 hover:text-gray-900 border border-gray-300 hover:border-gray-500">
-              <AiFillHeart size={16} />
-            </button>
+          <div className="flex justify-between items-center md:mt-0 mt-3">
+            <div className="flex">
+              <button className="shadow-sm transition-colors duration-300 ease-in-out py-1.5 px-2.5 rounded mr-2.5 text-gray-500 hover:text-gray-900 border border-gray-300 hover:border-gray-500">
+                <AiFillHeart size={16} />
+              </button>
 
-            <button className="shadow-sm transition-colors duration-300 ease-in-out py-1.5 px-2.5 rounded text-gray-500 hover:text-gray-900 border border-gray-300 hover:border-gray-500">
-              <AiOutlinePlus size={16} />
-            </button>
-
+              <button className="shadow-sm transition-colors duration-300 ease-in-out py-1.5 px-2.5 rounded text-gray-500 hover:text-gray-900 border border-gray-300 hover:border-gray-500">
+                <AiOutlinePlus size={16} />
+              </button>
+            </div>
             <div className="flex ml-2.5">
               <button className="shadow-sm transition-colors duration-300 ease-in-out text-sm px-2.5 py-0.5 flex items-center text-gray-500 hover:text-gray-900 rounded-l border border-gray-300 hover:border-gray-500">
                 Download
@@ -76,9 +77,11 @@ const ModalContent: FC<ModalContentProps> = ({ photo }) => {
         >
           <div
             style={{
+              backgroundColor: photo.color,
               background: `url(${blurDataUrl})`,
               backgroundRepeat: "no-repeat",
               backgroundPosition: "center",
+              backgroundSize: "cover",
             }}
           >
             <img

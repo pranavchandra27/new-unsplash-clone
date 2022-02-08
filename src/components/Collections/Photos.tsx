@@ -33,7 +33,7 @@ const Photos = ({ id }: Props) => {
   if (error) return <p>Error Occured</p>;
   return (
     <div className="overflow-hidden">
-      {total > 0 && <h2 className="mt-2 mb-8">{total} photos</h2>}
+      {total > 0 && <h2 className="px-3 mt-2 mb-8">{total} photos</h2>}
 
       {/* <InfiniteScroll
         dataLength={photos.length}

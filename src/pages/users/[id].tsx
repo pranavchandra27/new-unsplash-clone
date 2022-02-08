@@ -27,7 +27,7 @@ const User = () => {
           <div className="md:flex-[0.3]">
             <div>
               <img
-                className="md:ml-auto md:mr-8 w-[150px] h-[150px] rounded-full ring-1 ring-gray-300"
+                className="md:ml-auto md:mr-8 md:w-[150px] w-32 md:h-[150px] h-32 rounded-full ring-1 ring-gray-300"
                 src={user.profile_image.large}
                 alt={user.name}
               />

@@ -11,8 +11,8 @@ const GridContainer = ({ children, className, columnClassName }: Props) => {
     <Masonry
       breakpointCols={{
         default: 3,
-        900: 2,
-        640: 1,
+        1024: 2,
+        768: 1,
       }}
       className={"flex -ml-5 w-auto overflow-hidden " + className}
       columnClassName={"pl-5 " + columnClassName}

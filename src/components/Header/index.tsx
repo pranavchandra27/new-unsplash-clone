@@ -3,12 +3,11 @@ import { IoSearchOutline } from "react-icons/io5";
 
 const Header = () => {
   return (
-    <nav className="h-16 flex w-full items-center px-5">
+    <nav className="h-16 flex items-center px-5">
       <div className="flex-1 flex items-center">
         <Link href="/">
-          <div className="hidden md:block w-40">
+          <div className="hidden sm:block w-24 cursor-pointer">
             <p className="text-md font-medium">Splash</p>
-            <p className="text-sm">Photos for everyone</p>
           </div>
         </Link>
         <form className="transition duration-300 ease-in-out w-full h-10 flex items-center rounded-full bg-gray-100 px-5 hover:ring-1 hover:ring-gray-200 focus-within:bg-white focus-within:ring-1 focus-within ring-gray-200">
@@ -21,9 +20,9 @@ const Header = () => {
             className="w-full focus:placeholder-shown:text-gray-800 placeholder-shown:font-normal font-medium text-md text-gray-700 ml-4 placeholder-shown:text-sm outline-none bg-transparent"
           />
         </form>
-        <div className="ml-4">
+        <div className="ml-5">
           <Link href="/collections">
-            <span className="cursor-pointer">Collections</span>
+            <span className="text-gray-500 hover:text-gray-700 font-medium cursor-pointer">Collections</span>
           </Link>
         </div>
       </div>
