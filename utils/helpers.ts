@@ -60,3 +60,15 @@ export const uniqArray = (arr: any[]): any[] =>
   Object.values(
     arr.reduce((acc, cur) => Object.assign(acc, { [cur.id]: cur }), {})
   );
+
+
+export const startCase = (value: string | string[]): string => {
+  if (!value || typeof value !== 'string') return '';
+
+  return value.split(' ').map((item: string) => {
+    const firstChar = item.charAt(0);
+    const lastChars = item.split(firstChar)[1];
+
+    return firstChar.toUpperCase() + lastChars
+  }).join(" ")
+}

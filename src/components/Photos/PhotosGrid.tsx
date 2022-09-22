@@ -1,13 +1,11 @@
 import { useEffect } from "react";
-import InfiniteScroll from "react-infinite-scroll-component";
 import useSWRInfinite from "swr/infinite";
 
 import { changePage, setPhotosData } from "@context/actions";
 import { useData } from "@context/provider";
-import Photo from "./Photo";
-import GridContainer from "@components/GridContainer";
 import { fetcher } from "@utils/helpers";
 import { StateProps } from "typings";
+import InfiniteGrid from "@components/InfiniteGrid";
 
 const PhotosGrid = () => {
   const {
@@ -35,20 +33,12 @@ const PhotosGrid = () => {
 
   return (
     <div className="max-w-[1320px] mx-auto px-0 md:px-4">
-      <InfiniteScroll
-        dataLength={photosList.length}
-        next={nextPage}
-        hasMore={total !== photosList.length}
-        loader={
-          isValidating ? <div className="text-center">Loading...</div> : <p></p>
-        }
-      >
-        <GridContainer>
-          {photosList.map((photo: any) => (
-            <Photo key={photo.id} photo={photo} />
-          ))}
-        </GridContainer>
-      </InfiniteScroll>
+      <InfiniteGrid
+        photosList={photosList}
+        nextPage={nextPage}
+        isValidating={isValidating}
+        total={total}
+      />
     </div>
   );
 };

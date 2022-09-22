@@ -2,7 +2,7 @@ import Hero from "@components/Hero";
 import PhotosGrid from "@components/Photos/PhotosGrid";
 import Head from "next/head";
 
-export default function Home({ photos }) {
+export default function Home() {
   return (
     <div>
       <Head>

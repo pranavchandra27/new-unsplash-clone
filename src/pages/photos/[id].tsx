@@ -4,17 +4,14 @@ import { useRouter } from "next/router";
 import useSWR from "swr";
 import { IPhotoProps } from "typings";
 
-
 const Photo = () => {
   const router = useRouter();
   const { id } = router.query;
-  const {data, error, isValidating} = useSWR(`/api/photos/${id}`, fetcher);
+  const { data } = useSWR(`/api/photos/${id}`, fetcher);
 
+  if (!data) return <p>Loading...</p>;
 
-
-  if(!data) return <p>Loading...</p>
-
-  const photo: IPhotoProps = data.response
+  const photo: IPhotoProps = data.response;
 
   return <ModalContent photo={photo} />;
 };

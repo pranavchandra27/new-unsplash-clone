@@ -4,3 +4,4 @@ export const SET_PAGE = "SET_PAGE";
 export const SET_LOADING = "SET_LOADING";
 export const SET_COLLECTIONS = "SET_COLLECTIONS";
 export const SET_COLLECTION_PAGE = "SET_COLLECTION_PAGE";
+export const SET_SEARCH_QUERY = "SET_SEARCH_QUERY";

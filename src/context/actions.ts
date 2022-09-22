@@ -6,59 +6,69 @@ import {
   SET_LOADING,
   SET_COLLECTIONS,
   SET_COLLECTION_PAGE,
+  SET_SEARCH_QUERY,
 } from "./actionTypes";
 import { Action } from "./reducer";
 
 export const setPhotosData =
   (data: object) =>
-  (dispatch: React.Dispatch<Action>) => {
-    dispatch({
-      type: SET_PHOTOS,
-      payload: data,
-    });
-  };
+    (dispatch: React.Dispatch<Action>) => {
+      dispatch({
+        type: SET_PHOTOS,
+        payload: data,
+      });
+    };
 
 export const changePage =
   (page: number) =>
-  (dispatch: React.Dispatch<Action>) => {
-    dispatch({
-      type: SET_PAGE,
-      payload: page,
-    });
-  };
+    (dispatch: React.Dispatch<Action>) => {
+      dispatch({
+        type: SET_PAGE,
+        payload: page,
+      });
+    };
 
 export const changeCollectionPage =
   (page: number) =>
-  (dispatch: React.Dispatch<Action>) => {
-    dispatch({
-      type: SET_COLLECTION_PAGE,
-      payload: page,
-    });
-  };
+    (dispatch: React.Dispatch<Action>) => {
+      dispatch({
+        type: SET_COLLECTION_PAGE,
+        payload: page,
+      });
+    };
 
 export const setHeaderPhoto =
   (data: object) =>
-  (dispatch: React.Dispatch<Action>) => {
-    dispatch({
-      type: SET_HEADER_PHOTO,
-      payload: data,
-    });
-  };
+    (dispatch: React.Dispatch<Action>) => {
+      dispatch({
+        type: SET_HEADER_PHOTO,
+        payload: data,
+      });
+    };
 
 export const setLoadingPhotos =
   (data: boolean) =>
-  (dispatch: React.Dispatch<Action>) => {
-    dispatch({
-      type: SET_LOADING,
-      payload: data,
-    });
-  };
+    (dispatch: React.Dispatch<Action>) => {
+      dispatch({
+        type: SET_LOADING,
+        payload: data,
+      });
+    };
 
 export const setCollections =
   (data: object) =>
-  (dispatch: React.Dispatch<Action>) => {
-    dispatch({
-      type: SET_COLLECTIONS,
-      payload: data,
-    });
-  };
+    (dispatch: React.Dispatch<Action>) => {
+      dispatch({
+        type: SET_COLLECTIONS,
+        payload: data,
+      });
+    };
+
+export const setSearchQuery =
+  (query: string) =>
+    (dispatch: React.Dispatch<Action>) => {
+      dispatch({
+        type: SET_SEARCH_QUERY,
+        payload: query,
+      });
+    };
