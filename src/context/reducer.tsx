@@ -7,6 +7,8 @@ import {
   SET_COLLECTIONS,
   SET_COLLECTION_PAGE,
   SET_SEARCH_QUERY,
+  SET_SEARCH_PHOTOS,
+  SET_SEARCH_COLLECTIONS,
 } from "./actionTypes";
 import * as PhotoApi from "unsplash-js/dist/methods/photos/types";
 import { ICollectionProps } from "typings";
@@ -18,11 +20,13 @@ export type State = {
     total: number;
   };
   page: number;
-  headerPhoto: string;
+  headerPhoto: PhotoApi.Full | any;
   loading: boolean;
   collections: { results: [ICollectionProps] | any[]; total: number };
   collectionPage: number;
   searchQuery: string;
+  searchPhotos: [PhotoApi.Full] | any[];
+  searchCollections: [ICollectionProps] | any[];
 };
 
 export type Action = {
@@ -44,11 +48,17 @@ export const initialState: State = {
   },
   collectionPage: 1,
   searchQuery: "",
+  searchPhotos: [],
+  searchCollections: [],
 };
 
 const reducer: Reducer<State, Action> = (state, action) => {
   const { payload, type } = action;
   switch (type) {
+    case SET_SEARCH_PHOTOS:
+      return { ...state, searchPhotos: payload };
+    case SET_SEARCH_COLLECTIONS:
+      return { ...state, searchCollections: payload };
     case SET_PHOTOS:
       const { photosData } = state;
       const { results: photosResults, total: photosTotal } = payload;

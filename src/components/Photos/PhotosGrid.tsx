@@ -34,7 +34,7 @@ const PhotosGrid = () => {
   return (
     <div className="max-w-[1320px] mx-auto px-0 md:px-4">
       <InfiniteGrid
-        photosList={photosList}
+        results={photosList}
         nextPage={nextPage}
         isValidating={isValidating}
         total={total}
