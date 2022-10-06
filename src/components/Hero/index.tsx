@@ -1,13 +1,19 @@
 import React from "react";
 import { useData } from "@context/provider";
 import { IoSearchOutline } from "react-icons/io5";
-import { setSearchQuery } from "@context/actions";
+import {
+  setSearchCollections,
+  setSearchPhotos,
+  setSearchQuery,
+} from "@context/actions";
 import { useRouter } from "next/router";
+import { StateProps } from "typings";
 
 const Hero = () => {
   const {
     state: { headerPhoto: photo },
-  } = useData();
+    dispatch,
+  }: StateProps = useData();
   const router = useRouter();
   const [value, setValue] = React.useState("");
 
@@ -15,8 +21,9 @@ const Hero = () => {
     e.preventDefault();
 
     if (!value) return;
-
-    router.push(`s/photos/${value}`);
+    setSearchPhotos([])(dispatch);
+    setSearchCollections([])(dispatch);
+    router.push(`/s/photos/${value}`);
     setSearchQuery(value);
   };
 

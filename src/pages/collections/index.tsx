@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
-import { ICollectionProps, StateProps } from "typings";
-import Collection from "@components/Collections/Collection";
-import InfiniteScroll from "react-infinite-scroll-component";
+import { StateProps } from "typings";
 import useSWRInfinite from "swr/infinite";
+
 import { fetcher } from "@utils/helpers";
 import { useData } from "@context/provider";
 import { changeCollectionPage, setCollections } from "@context/actions";
+import InfiniteGrid from "@components/InfiniteGrid";
 
 const Collections = () => {
   const {
@@ -48,18 +48,13 @@ const Collections = () => {
         </div>
       </div>
 
-      <InfiniteScroll
-        dataLength={collections.length}
-        hasMore={total !== collections.length}
-        next={nextPage}
-        loader={isValidating && <p>Loading...</p>}
-      >
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-2">
-          {collections.map((collection: ICollectionProps) => (
-            <Collection key={collection.share_key} collection={collection} />
-          ))}
-        </div>
-      </InfiniteScroll>
+      <InfiniteGrid
+        results={collections}
+        total={total}
+        nextPage={nextPage}
+        type="collections"
+        isValidating={isValidating}
+      />
     </div>
   );
 };

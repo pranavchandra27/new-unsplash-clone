@@ -16,9 +16,11 @@ function MyApp({ Component, pageProps }) {
         showOnShallow={false}
         options={{ easing: "ease", speed: 500 }}
       />
-      <Header />
       <React.StrictMode>
-        <Component {...pageProps} />
+        <div className="overflow-visible">
+          <Header />
+          <Component {...pageProps} />
+        </div>
       </React.StrictMode>
     </AppProvider>
   );

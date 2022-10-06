@@ -7,6 +7,8 @@ import {
   SET_COLLECTIONS,
   SET_COLLECTION_PAGE,
   SET_SEARCH_QUERY,
+  SET_SEARCH_PHOTOS,
+  SET_SEARCH_COLLECTIONS
 } from "./actionTypes";
 import { Action } from "./reducer";
 
@@ -70,5 +72,22 @@ export const setSearchQuery =
       dispatch({
         type: SET_SEARCH_QUERY,
         payload: query,
+      });
+    };
+
+export const setSearchPhotos =
+  (results: object) =>
+    (dispatch: React.Dispatch<Action>) => {
+      dispatch({
+        type: SET_SEARCH_PHOTOS,
+        payload: results,
+      });
+    };
+export const setSearchCollections =
+  (results: object) =>
+    (dispatch: React.Dispatch<Action>) => {
+      dispatch({
+        type: SET_SEARCH_COLLECTIONS,
+        payload: results,
       });
     };
